@@ -1,6 +1,6 @@
 # How i React 2024
 
 - Intro
-- Breaks
+- Schedule
 - Short opening movie - email
 - Repo: https://github.com/galamo/How_I_React_2024
