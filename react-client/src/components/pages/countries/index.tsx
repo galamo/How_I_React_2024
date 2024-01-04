@@ -5,6 +5,7 @@ import { Country, CountryType } from "./country"
 export function CountriesPage() {
     const [countries, setCountries] = useState<Array<CountryType>>([])
 
+    
 
     useEffect(() => {
         async function fetchCountries() {

@@ -1,10 +1,10 @@
 import { User } from "./User";
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import axios from "axios"
 import data from "./data.json"
 import ReactModal from "react-modal-resizable-draggable"
 export function UsersPage() {
-    const [users, setUsers] = useState(data)
+    const [users, setUsers] = useState([])
     const [userName, setUserName] = useState("")
     const [nor, setNor] = useState(5)
     const [modalOpened, setModalOpened] = useState(false)
@@ -42,6 +42,20 @@ export function UsersPage() {
             isSubmitted = false
         }
     }, [nor])
+
+    function calcUsersAge() {
+        console.log("Calling long calculation")
+        const result = users.filter(u => u.age).reduce((sumOfAge, currentUser) => {
+            return sumOfAge + Number(currentUser.age)
+        }, 0)
+        return result
+    }
+    const longCalculationMemo = useMemo(() => {
+        return calcUsersAge()
+    }, [nor, users])
+
+    // const longCalculation = longCalculationMemo()
+
     return <div>
         <div>
             <ReactModal
@@ -64,6 +78,10 @@ export function UsersPage() {
             }}>
                 Users {nor}
             </h1>
+            <h2>
+                Statistics: {longCalculationMemo}
+
+            </h2>
         </div>
         <div>
             <div>
