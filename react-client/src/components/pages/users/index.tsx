@@ -1,5 +1,5 @@
 import { User } from "./User";
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import axios from "axios"
 import data from "./data.json"
 import ReactModal from "react-modal-resizable-draggable"
@@ -10,31 +10,36 @@ export function UsersPage() {
     const [modalOpened, setModalOpened] = useState(false)
     const [currentUser, setCurrentUser] = useState("")
 
-
-    useEffect(() => {
-        async function fetchUsers() {
-            console.log("fetchUsers!", nor)
-            try {
-
-                const { data } = await axios.get(`https://randomuser.me/api?results=${nor}`)
-                const { results } = data;
-                const modeledUsers = results.map((u: any) => {
-                    return {
-                        userName: `${u?.name?.title} ${u?.name?.first}`,
-                        age: u?.registered?.age
-                    }
-                })
+    let isSubmitted = true;
+    const fetchUsersCallback = useCallback(async function fetchUsers() {
+        isSubmitted = false
+        console.log("fetchUsers!", nor)
+        try {
+            isSubmitted = true;
+            const { data } = await axios.get(`https://randomuser.me/api?results=${nor}`)
+            const { results } = data;
+            const modeledUsers = results.map((u: any) => {
+                return {
+                    userName: `${u?.name?.title} ${u?.name?.first}`,
+                    age: u?.registered?.age
+                }
+            })
+            if (isSubmitted) {
                 console.log("State set!", nor)
                 setUsers(modeledUsers)
-            } catch (error) {
-
             }
+        } catch (error) {
 
         }
-        fetchUsers()
+
+    }, [nor])
+
+    useEffect(() => {
+
+        fetchUsersCallback()
 
         return () => {
-            console.log("Component Destroy")
+            isSubmitted = false
         }
     }, [nor])
     return <div>

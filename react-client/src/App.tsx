@@ -2,6 +2,8 @@
 import { UsersPage } from './components/pages/users'
 import './App.css'
 import { useState } from 'react'
+import { Country } from './components/pages/countries/country'
+import { CountriesPage } from './components/pages/countries'
 
 function App() {
   const [showUsers, setShowUsers] = useState(true)
@@ -19,6 +21,7 @@ function App() {
         </button>
       </div>
       {showUsers ? <UsersPage /> : "No Users"}
+      <CountriesPage />
     </>
   )
 }
