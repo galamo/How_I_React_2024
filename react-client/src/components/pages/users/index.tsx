@@ -3,8 +3,10 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import axios from "axios"
 import data from "./data.json"
 import ReactModal from "react-modal-resizable-draggable"
-export function UsersPage() {
+import { WithLoading } from "../../ui/loader";
+export default function UsersPage() {
     const [users, setUsers] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     const [userName, setUserName] = useState("")
     const [nor, setNor] = useState(5)
     const [modalOpened, setModalOpened] = useState(false)
@@ -15,6 +17,7 @@ export function UsersPage() {
         isSubmitted = false
         console.log("fetchUsers!", nor)
         try {
+            setIsLoading(true)
             isSubmitted = true;
             const { data } = await axios.get(`https://randomuser.me/api?results=${nor}`)
             const { results } = data;
@@ -30,6 +33,8 @@ export function UsersPage() {
             }
         } catch (error) {
 
+        } finally {
+            setIsLoading(false)
         }
 
     }, [nor])
@@ -96,12 +101,16 @@ export function UsersPage() {
                 {userName}
             </div>
         </div>
-        {users.map((user, index) => {
-            return <User key={user.userName + index} userName={user.userName} openWorkArrangment={(user: string) => {
-                setCurrentUser(user)
-                setModalOpened(true)
-            }} />
-        })}
+        <WithLoading isLoading={isLoading}>
+            <>
+                {users.map((user, index) => {
+                    return <User key={user.userName + index} userName={user.userName} openWorkArrangment={(user: string) => {
+                        setCurrentUser(user)
+                        setModalOpened(true)
+                    }} />
+                })}
+            </>
+        </WithLoading>
 
 
     </div>
