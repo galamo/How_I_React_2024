@@ -161,7 +161,10 @@ based on your information
 
 
 ### EX - 9
-- Add New Route Countries Route
+- Create Countries Page
+- The page will fetch all countries data from the following api: `https://restcountries.com/v3.1/all`
+- Create `Country` Component 
+- Present all the Countries
 
 
 
