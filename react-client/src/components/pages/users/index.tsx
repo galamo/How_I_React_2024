@@ -8,7 +8,7 @@ export function UsersPage() {
     const [userName, setUserName] = useState("")
     const [nor, setNor] = useState(5)
     const [modalOpened, setModalOpened] = useState(false)
-    const [currentUser, setCurrentUser] = useState(false)
+    const [currentUser, setCurrentUser] = useState("")
 
 
     useEffect(() => {
@@ -44,10 +44,11 @@ export function UsersPage() {
                 initHeight={400}
                 onFocus={() => console.log("Modal is clicked")}
                 className={"my-modal-custom-class"}
-                isOpen={modalOpened}>
+                isOpen={modalOpened} >
+
                 <h3>My Modal</h3>
                 <div className="body">
-                    <p>This is the modal&apos;s body.</p>
+                    <p>Work arrangmenet for {currentUser}</p>
                 </div>
                 <button onClick={() => { setModalOpened(false) }}>
                     Close

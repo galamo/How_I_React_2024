@@ -101,7 +101,7 @@ button:focus-visible {
 }
 
 .flexible-modal-drag-area {
-  background: rgba(22, 22, 333, 0.2);
+  /* background: rgba(22, 22, 333, 0.2); */
   height: 50px;
   position: absolute;
   right: 0;
